@@ -101,9 +101,10 @@ then
 fi
 
 # Add Cargo binaries to PATH.
-export PATH=/home/james/.cargo/bin:$PATH
-. "$HOME/.cargo/env"
-
+if [ -d ~/.cargo ]; then
+    export PATH=$HOME/.cargo/bin:$PATH
+    . "$HOME/.cargo/env"
+fi
 
 # Fix for Debian not sourcing vte.sh.
 # See https://gnunn1.github.io/tilix-web/manual/vteconfig/
