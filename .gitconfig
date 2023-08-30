@@ -1,0 +1,20 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+name = James Frost
+email = git@frost.cx
+	signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCu2++rLxo1FGTsTxOAgbDvjFFj0aYKDMo/Slj2tyhZ james@venus
+[credential]
+	helper = store
+[gpg]
+	format = ssh
+[commit]
+	gpgSign = true
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[alias]
+	st = status
+[push]
+	autoSetupRemote = true
