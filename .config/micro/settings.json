@@ -1,0 +1,13 @@
+{
+    "*.txt": {
+        "aspell.check": "on"
+    },
+    "autoclose": false,
+    "divchars": "│─",
+    "hlsearch": true,
+    "scrollspeed": 3,
+    "softwrap": true,
+    "statusformatl": "$(filename) $(modified)",
+    "statusformatr": "$(status.branch) $(status.hash) ($(line),$(col))",
+    "wordwrap": true
+}
