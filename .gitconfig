@@ -1,20 +1,30 @@
 # This is Git's per-user configuration file.
+
 [user]
-# Please adapt and uncomment the following lines:
-name = James Frost
-email = git@frost.cx
+	# Please adapt and uncomment the following lines:
+	name = James Frost
+	email = git@frost.cx
 	signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCu2++rLxo1FGTsTxOAgbDvjFFj0aYKDMo/Slj2tyhZ james@venus
-[credential]
-	helper = store
 [gpg]
 	format = ssh
+[diff]
+	guitool = meld
+	tool = meld
+	colorMoved = zebra
+	algorithm = histogram
 [commit]
+	gpgSign = true
+[tag]
 	gpgSign = true
 [init]
 	defaultBranch = main
-[pull]
-	rebase = true
 [alias]
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(auto)%h%C(reset) - %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
 	st = status
+[fetch]
+	prune = true
+[pull]
+	ff = only
 [push]
 	autoSetupRemote = true
+
