@@ -14,6 +14,7 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
+
 # === BASH HISTORY ===
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -69,6 +70,7 @@ if [ -n "$force_color_prompt" ]; then
   fi
 fi
 
+
 # === TERMINAL PROMPT ===
 prompt_nonzero_return() {
   return_val=$?
@@ -98,15 +100,47 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# == SET PREFERED EDITOR ==
-# Use a local copy of nano when the system one is old.
-if [ -f "$HOME/.local/bin/nano" ]; then
-  alias nano="$HOME/.local/bin/nano"
+
+# === CUSTOM BINARIES ===
+# Set PATH so it includes user's private bin if it exists.
+if [ -d "$HOME/.local/bin" ] ; then
+  # Affix colons on either side of $PATH to simplify matching.
+  case ":${PATH}:" in
+    *:"$HOME/.local/bin":*)
+      ;;
+    *)
+    # Prepending path to allow overwriting old versions.
+    PATH="$HOME/.local/bin:$PATH"
+    ;;
+  esac
 fi
+
+# Set PATH so it includes user's private bin if it exists.
+if [ -d "$HOME/bin" ] ; then
+  case ":${PATH}:" in
+    *:"$HOME/bin":*)
+      ;;
+    *)
+    PATH="$HOME/bin:$PATH"
+    ;;
+  esac
+fi
+
+# Include cargo binaries if they exist.
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
+
+export PATH
+
+
+# === SET PREFERED EDITOR ===
+# Use local nano if it exists rather than crusty system version.
 VISUAL="$(command -v nano)"
 EDITOR="$VISUAL"
 export VISUAL
 export EDITOR
+
 
 # == RANDOM FIXES ==
 # Fix for Debian not sourcing vte.sh.
@@ -122,6 +156,7 @@ if [ -d "$HOME/.local/share/Android/Sdk/" ]; then
   export ANDROID_HOME=/home/james/.local/share/Android/Sdk/
 fi
 
+
 # === MET OFFICE ===
 
 # Needed to make VER work apparently
@@ -133,6 +168,7 @@ export CYLC_VERSION=8
 
 # As much as I love it, I mistype too much.
 alias sl=false
+
 
 # === ALIASES ===
 # Running on local temp space really speeds up tox.
