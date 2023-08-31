@@ -158,10 +158,11 @@ fi
 
 
 # === MET OFFICE ===
-
 # Needed to make VER work apparently
 # Suggested by Stephen Gallagher
-. ver-profile
+if command -v ver-profile > /dev/null; then
+  . ver-profile
+fi
 
 # Only needed until Cylc 8 is the default.
 export CYLC_VERSION=8
