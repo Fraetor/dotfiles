@@ -1,0 +1,22 @@
+[global_config]
+  inactive_color_offset = 1.0
+  title_transmit_bg_color = "#C4E90C"
+  title_transmit_fg_color = "#000000"
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_color = "#1d1d1d"
+    background_darkness = 0.7
+    cursor_color = "#C4E90C"
+    cursor_shape = ibeam
+    foreground_color = "#ffffff"
+    scrollbar_position = hidden
