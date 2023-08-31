@@ -1,3 +1,4 @@
+#! /bin/sh
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
@@ -23,6 +24,6 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # include cargo binaries if they exist
-if [ -f "$HOME/.bashrc" ]; then
+if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
