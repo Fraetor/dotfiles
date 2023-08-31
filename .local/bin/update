@@ -1,0 +1,22 @@
+#! /bin/bash
+set -euo pipefail
+IFS="$(printf '\n\t')"
+
+# Use APT where avalible.
+if command -v apt > /dev/null
+then
+    sudo apt update
+    apt list --upgradable
+    sudo apt upgrade
+
+# Otherwise try DNF.
+elif command -v dnf > /dev/null
+then
+    sudo dnf update
+fi
+
+# Update flatpaks if we have it installed.
+if command -v flatpak > /dev/null
+then
+    flatpak update
+fi

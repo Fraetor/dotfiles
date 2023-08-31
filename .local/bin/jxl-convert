@@ -1,0 +1,119 @@
+#! /usr/bin/env python3
+
+import argparse
+import concurrent.futures
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+
+def distance_float(number: str) -> float:
+    distance = float(number)
+    if not (0 < distance < 25):
+        raise ValueError("Distance must be positive and less than 25.")
+    return distance
+
+
+def compress_file(file_path: Path, args) -> None:
+    try:
+        process = subprocess.run(
+            [
+                "cjxl",
+                "--num_threads=0",
+                f"--lossless_jpeg={args.jpeg_lossless}",
+                f"--distance={args.distance:.2f}",
+                "--",
+                f"{file_path.resolve()}",
+                f"{file_path.with_suffix('.jxl').resolve()}",
+            ],
+            capture_output=True,
+            text=True,
+        )
+        process.check_returncode()
+    except subprocess.CalledProcessError as err:
+        if not args.quiet:
+            print(
+                f"Conversion of {file_path} failed:\n{process.stderr}", file=sys.stderr
+            )
+        return
+    if args.verbose:
+        print(f"Converted {file_path}")
+    file_path.unlink()
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Bulk convert images to JPEG XL.")
+    parser.add_argument(
+        "target_directory",
+        nargs="?",
+        default=Path(os.getcwd()),
+        type=Path,
+        help="Directory to convert. If omitted, defaults to the current directory.",
+    )
+    parser.add_argument(
+        "-d",
+        "--distance",
+        type=distance_float,
+        default=0,
+        help="""Max. butteraugli distance, where lower means higher quality.
+        0 is mathematically lossless (default), 1.0 is visually lossless.
+        The recommended range is 0.5 to 3.0.""",
+    )
+    parser.add_argument(
+        "-r", "--recursive", action="store_true", help="Recurse into subdirectories."
+    )
+    verbosity_options = parser.add_mutually_exclusive_group()
+    verbosity_options.add_argument(
+        "-q", "--quiet", action="store_true", help="Suppress progress output."
+    )
+    verbosity_options.add_argument(
+        "-v", "--verbose", action="store_true", help="Explain what is being done."
+    )
+    args = parser.parse_args()
+
+    # Use bit-exact lossless for JPEGs.
+    if args.distance == 0.0:
+        args.jpeg_lossless = "1"
+    else:
+        args.jpeg_lossless = "0"
+
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+
+        def compress_if_image(file_path: Path) -> concurrent.futures.Future or None:
+            # Make sure file_path is a Path object.
+            file_path = Path(file_path)
+            supported_extensions = frozenset({".jpg", ".jpeg", ".png", ".ppm", ".gif"})
+            if file_path.suffix.lower() in supported_extensions:
+                return executor.submit(compress_file, file_path, args)
+        futures = []
+        if args.recursive:
+            for dirpath, _, files in os.walk(args.target_directory):
+                for file in files:
+                    future = compress_if_image(os.path.join(dirpath, file))
+                    if future is not None:
+                        futures.append(future)
+        else:
+            with os.scandir(args.target_directory) as directory:
+                for file in directory:
+                    if file.is_file():
+                        future = compress_if_image(file.path)
+                        if future is not None:
+                            futures.append(future)
+
+        jobs = 0
+        total_jobs = len(futures)
+        if total_jobs != 0:
+            for _ in concurrent.futures.as_completed(futures):
+                jobs += 1
+                if not args.quiet:
+                    print(f"Compressing images: {jobs}/{total_jobs}", end="\r")
+            if not args.quiet:
+                print()
+        else:
+            if not args.quiet:
+                print("No compressible images found.")
+
+
+if __name__ == "__main__":
+    sys.exit(main())

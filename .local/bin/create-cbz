@@ -1,0 +1,52 @@
+#! /usr/bin/env bash
+set -euo pipefail
+# Convert folders to CBZ archives.
+
+top_level_dir="$(pwd)"
+
+# Create pattern matching file:
+temp_dir="$(mktemp -p /tmp -d "$(basename "$0").XXXXXXXXXX")"
+{
+    echo .jpg
+    echo .jpeg
+    echo .png
+    echo .jxl
+    echo .bmp
+    echo .gif
+    echo .tif
+    echo .tiff
+    echo .jp2
+    echo .avif
+    echo .webp
+    echo .xml
+    echo .json
+    echo .yml
+    echo .yaml
+} >> "$temp_dir/pattern"
+
+
+for folder in */; do
+    cd "$folder"
+    zip_name=$(basename "$folder").cbz
+    
+    # Create ZIP if there are only image files.
+    if [[ -n $(ls -AF | grep /) ]]; then
+        echo Skipping "$folder" as it contains sub directories.
+        elif [[ -n $(ls -AF | grep -v -i -f "$temp_dir/pattern") ]]; then
+        echo Skipping "$folder" as it contains non image files.
+    else
+        echo Creating "$zip_name"
+        zip -r -q ../"$zip_name" -- *
+    fi
+    
+    cd "$top_level_dir"
+    
+    # Delete folder if ZIP created.
+    if [[ -f "$zip_name" ]]; then
+        # echo "Deleting $folder"
+        rm -r -- "$folder"
+    fi
+done
+
+# Clean up temp files.
+rm -r "$temp_dir"

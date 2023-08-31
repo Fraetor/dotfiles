@@ -1,0 +1,6 @@
+#! /bin/bash
+set -euo pipefail
+
+input="$*"
+[ -z "$input" ] && input=@/dev/stdin
+curl -d "$input" https://qrcode.show

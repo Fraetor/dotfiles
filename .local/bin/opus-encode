@@ -1,0 +1,24 @@
+#! /usr/bin/env bash
+set -euo pipefail
+
+for file in *
+do
+    full_filename=$(basename -- "$file")
+    extention="${full_filename##*.}"
+    filename="${full_filename%.*}"
+    # Skip file if it doesn't need transcoding.
+    if [ "$extention" != "wav" ] && [ "$extention" != "WAV" ] && [ "$extention" != "flac" ] && [ "$extention" != "FLAC" ]
+    then
+        continue
+    fi
+    # Convert file to Opus and delete original on a success.
+    echo "$full_filename"
+    ffmpeg -i "$file" -c:a libopus -b:a 192K -q:v 10 "$filename".opus
+    status_code=$?
+    if [ $status_code == 0 ]
+    then
+        rm -- "$file"
+    else
+        echo "$PWD/$full_filename" | tee -a ~/opus_encode.log
+    fi
+done
