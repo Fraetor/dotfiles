@@ -87,6 +87,8 @@ else
 fi
 unset color_prompt force_color_prompt
 export PS1
+# Limit the number of directories in the prompt to stop it growing too long.
+PROMPT_DIRTRIM=3
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
