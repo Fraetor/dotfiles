@@ -60,7 +60,7 @@ set constantshow
 
 ## Draw a vertical stripe at the given column, to help judge text width.
 ## (This option does not have a default value.)
-# set guidestripe 78
+# set guidestripe 80
 
 ## Remember the used search/replace strings for the next session.
 set historylog
@@ -72,7 +72,7 @@ set historylog
 # set jumpyscrolling
 
 ## Display line numbers to the left (and any anchors in the margin).
-set linenumbers
+# set linenumbers
 
 ## Enable vim-style lock-files.  This is just to let a vim user know you
 ## are editing a file [s]he is trying to edit and vice versa.  There are
@@ -253,7 +253,7 @@ include "/usr/share/nano/*.nanorc"
 
 ## If <Tab> should always produce four spaces when editing a Python file,
 ## independent of the settings of 'tabsize' and 'tabstospaces':
-# extendsyntax python tabgives "    "
+extendsyntax python tabgives "    "
 
 ## If <Tab> should always produce an actual TAB when editing a Makefile:
 # extendsyntax makefile tabgives "	"
