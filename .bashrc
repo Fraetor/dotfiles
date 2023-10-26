@@ -153,12 +153,6 @@ if [ -f /etc/debian-version ]; then
   fi
 fi
 
-# Needed to get Android studio emulator working without booking the full IDE.
-if [ -d "$HOME/.local/share/Android/Sdk/" ]; then
-  export ANDROID_HOME=/home/james/.local/share/Android/Sdk/
-fi
-
-
 # === MET OFFICE ===
 # Needed to make VER work apparently
 # Suggested by Stephen Gallagher
