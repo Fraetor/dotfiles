@@ -5,7 +5,7 @@ set -euo pipefail
 top_level_dir="$(pwd)"
 
 # Create pattern matching file:
-temp_dir="$(mktemp -p /tmp -d "$(basename "$0").XXXXXXXXXX")"
+temp_dir="$(mktemp -d "$(basename "$0").XXXXXXXXXX")"
 {
     echo .jpg
     echo .jpeg
