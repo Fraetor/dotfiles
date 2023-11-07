@@ -1,8 +1,23 @@
-personal_ws-1.1 en 7 
-Electricals
-yml
+personal_ws-1.1 en 22
+cli
 conda
-yaml
-workflows
-github
+conf
+CSET
+cylc
+docstring
+docstrings
+Electricals
 Exeter
+github
+init
+OneNote
+py
+pyproject
+rst
+src
+toml
+workflow
+workflows
+YAML
+yaml
+yml
