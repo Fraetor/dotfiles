@@ -3,6 +3,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Uncomment to profile bashrc startup speed.
+# PS4='+ $EPOCHREALTIME\011 '
+# exec 5> bashrc_trace.txt
+# BASH_XTRACEFD="5"
+# set -x
+
 # If not running interactively, don't do anything further.
 case $- in
   *i*) ;;
