@@ -78,16 +78,16 @@ fi
 
 
 # === TERMINAL PROMPT ===
+# TODO: Pick more standard colours.
+# TODO: Go through and remove unneeded colour changes. I'm sure there are a few that do nothing.
 prompt_nonzero_return() {
   return_val=$?
   if [ $return_val -ne 0 ]; then
-    printf "\001\033[48;2;207;73;34m\002\001\033[38;2;196;233;12m\002\001\033[38;2;255;255;255m\002 $return_val \001\033[0m\002\001\033[38;2;207;73;34m\002\001\033[0m\002"
-  else
-    printf "\001\033[38;2;196;233;12m\002\001\033[0m\002"
+    printf "\001\033[0m\002\001\033[38;2;207;73;34m\002${return_val}"
   fi
 }
 if [ "$color_prompt" = yes ]; then
-  PS1="\[\033[1m\]\[\033[48;2;42;42;42m\]\[\033[38;2;196;233;12m\] \u \[\033[48;2;196;233;12m\]\[\033[38;2;42;42;42m\] \w \[\033[0m\]\$(prompt_nonzero_return) "
+  PS1="\[\033[1m\]\[\033[48;2;42;42;42m\]\[\033[38;2;196;233;12m\] \u \[\033[48;2;196;233;12m\]\[\033[38;2;42;42;42m\] \w \[\033[0m\]\001\033[38;2;196;233;12m\002\n\$(prompt_nonzero_return)❯\001\033[0m\002 "
 else
   PS1='\u@\h:\w\$ '
 fi
