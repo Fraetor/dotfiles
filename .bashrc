@@ -78,17 +78,11 @@ fi
 
 
 # === TERMINAL PROMPT ===
-# TODO: Pick more standard colours.
-# TODO: Go through and remove unneeded colour changes. I'm sure there are a few that do nothing.
-prompt_nonzero_return() {
-  return_val=$?
-  if [ $return_val -ne 0 ]; then
-    printf "\001\033[0m\002\001\033[38;2;207;73;34m\002${return_val}"
-  fi
-}
 if [ "$color_prompt" = yes ]; then
-  PS1="\[\033[1m\]\[\033[48;2;42;42;42m\]\[\033[38;2;196;233;12m\] \u \[\033[48;2;196;233;12m\]\[\033[38;2;42;42;42m\] \w \[\033[0m\]\001\033[38;2;196;233;12m\002\n\$(prompt_nonzero_return)❯\001\033[0m\002 "
+  #      Bold Green.         Reset..     Bold Blue        Red.....                                                      Reset..
+  PS1='\[\033[1;32m\]\u@\h\[\033[0m\]:\[\033[1;34m\]\w\n\[\033[91m\]$(ret=$?; if [ $ret -ne 0 ]; then echo "$ret"; fi)\[\033[0m\]❯ '
 else
+  # For really basic terminals.
   PS1='\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
