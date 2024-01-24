@@ -63,6 +63,14 @@ def main():
     parser.add_argument(
         "-r", "--recursive", action="store_true", help="Recurse into subdirectories."
     )
+    parser.add_argument(
+        "-t",
+        "--threads",
+        action="store",
+        type=int,
+        default=os.cpu_count(),
+        help="Maximum number of parallel encodes. Default to number of CPUs.",
+    )
     verbosity_options = parser.add_mutually_exclusive_group()
     verbosity_options.add_argument(
         "-q", "--quiet", action="store_true", help="Suppress progress output."
@@ -78,7 +86,7 @@ def main():
     else:
         args.jpeg_lossless = "0"
 
-    with concurrent.futures.ProcessPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.threads) as executor:
 
         def compress_if_image(file_path: Path) -> concurrent.futures.Future or None:
             # Make sure file_path is a Path object.
@@ -86,6 +94,7 @@ def main():
             supported_extensions = frozenset({".jpg", ".jpeg", ".png", ".ppm", ".gif"})
             if file_path.suffix.lower() in supported_extensions:
                 return executor.submit(compress_file, file_path, args)
+
         futures = []
         if args.recursive:
             for dirpath, _, files in os.walk(args.target_directory):
