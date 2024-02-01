@@ -200,3 +200,6 @@ alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Open all the things.
 alias open=xdg-open
+
+# Fix GPG pinentry when not running a GUI session.
+export GPG_TTY=$(tty)
