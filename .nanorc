@@ -165,7 +165,7 @@ set softwrap
 
 ## Use this spelling checker instead of the internal one.  This option
 ## does not have a default value.
-set speller "aspell -c"
+# set speller "aspell -c"
 
 ## Use the end of the title bar for some state flags: I = auto-indenting,
 ## M = mark, L = hard-wrapping long lines, R = recording, S = soft-wrapping.
