@@ -190,8 +190,10 @@ venv() {
   elif [ -f env/bin/activate ]; then
     . env/bin/activate
   else
-    echo "venv not found"
-    return 1
+    echo "venv not found, creating one..."
+    python3 -m venv .venv
+    . .venv/bin/activate
+    python3 -m pip install --upgrade pip --quiet
   fi
 }
 
