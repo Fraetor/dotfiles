@@ -173,13 +173,17 @@ alias tox="tox --workdir /tmp/persistent/tox"
 
 # Flatpak aliases
 if command -v flatpak > /dev/null; then
-  if command -v inkscape > /dev/null; then
+  if ! command -v inkscape > /dev/null; then
     alias inkscape='flatpak run org.inkscape.Inkscape'
   fi
-  if command -v gimp > /dev/null; then
+  if ! command -v gimp > /dev/null; then
     alias gimp='flatpak run org.gimp.GIMP'
   fi
+  if ! command -v thunderbird > /dev/null; then
+    alias thunderbird='flatpak run org.mozilla.Thunderbird'
+  fi
 fi
+
 
 # Activates a python venv with a short command.
 venv() {
