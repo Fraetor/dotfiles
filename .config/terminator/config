@@ -1,4 +1,5 @@
 [global_config]
+  focus = system
   inactive_color_offset = 1.0
   title_transmit_bg_color = "#C4E90C"
   title_transmit_fg_color = "#000000"
