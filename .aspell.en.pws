@@ -1,10 +1,4 @@
-personal_ws-1.1 en 25 
-Electricals
-Exeter
-OneNote
-README
-Stateful
-Untracked
+personal_ws-1.1 en 28 
 cli
 conda
 conf
@@ -12,14 +6,23 @@ cset
 cylc
 docstring
 docstrings
+Electricals
+Exeter
 github
 init
+LFRic
+OneNote
 py
 pyproject
+README
+rebase
+rebasing
 rst
 runnable
 src
+Stateful
 toml
+Untracked
 workflow
 workflows
 yaml
