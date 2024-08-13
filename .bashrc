@@ -161,7 +161,7 @@ if command -v ver-profile > /dev/null; then
 fi
 
 # Only needed until Cylc 8 is the default.
-export CYLC_VERSION=8
+export CYLC_VERSION=8-next
 
 # As much as I love it, I mistype too much.
 alias sl=false
