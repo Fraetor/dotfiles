@@ -6,9 +6,11 @@
 
 [diff]
 	guitool = meld
-	tool = meld
 	colorMoved = zebra
 	algorithm = histogram
+[difftool]
+	prompt = false
+	guiDefault = auto
 [commit]
 	gpgSign = true
 [tag]
@@ -16,7 +18,7 @@
 [init]
 	defaultBranch = main
 [alias]
-	lg = log --graph --abbrev-commit --decorate --format=format:'%C(auto)%h%C(reset) - %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(auto)%h%C(reset) - %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
 	st = status
 [fetch]
 	prune = true
