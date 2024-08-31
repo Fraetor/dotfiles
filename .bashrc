@@ -84,6 +84,11 @@ if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
   # Setup git prompt variables.
   export GIT_PS1_SHOWDIRTYSTATE="y"
   export GIT_PS1_STATESEPARATOR=""
+else
+  # If we don't have the git promp avaliable, use a dummy version.
+  __git_ps1 () {
+    return
+  }
 fi
 
 if [ "$color_prompt" = yes ]; then
