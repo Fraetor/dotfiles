@@ -117,7 +117,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 
 # === CUSTOM BINARIES ===
-# Set PATH so it includes user's private bin if it exists.
+# Set PATH so it includes user's private bin if it exists, and is not already on PATH.
 if [ -d "$HOME/.local/bin" ] ; then
   # Affix colons on either side of $PATH to simplify matching.
   case ":${PATH}:" in
@@ -144,6 +144,11 @@ fi
 # Include cargo binaries if they exist.
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
+fi
+
+# Include pixi global binaries if they exist.
+if [ -d "$HOME/.pixi/bin" ]; then
+  PATH="$HOME/.pixi/bin:$PATH"
 fi
 
 export PATH
@@ -178,6 +183,9 @@ export CYLC_VERSION=8-next
 
 # As much as I love it, I mistype too much.
 alias sl=false
+
+# Fix GPG pinentry when not running a GUI session.
+export GPG_TTY=$(tty)
 
 
 # === ALIASES ===
@@ -219,6 +227,3 @@ alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Open all the things.
 alias open=xdg-open
-
-# Fix GPG pinentry when not running a GUI session.
-export GPG_TTY=$(tty)
