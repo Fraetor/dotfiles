@@ -149,6 +149,8 @@ fi
 # Include pixi global binaries if they exist.
 if [ -d "$HOME/.pixi/bin" ]; then
   PATH="$HOME/.pixi/bin:$PATH"
+  # Also include command line completions.
+  eval "$(pixi completion --shell bash)"
 fi
 
 export PATH
