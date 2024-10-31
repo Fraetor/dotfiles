@@ -1,0 +1,44 @@
+#! /usr/bin/env python3
+
+import sys
+import os
+import datetime
+import re
+
+
+def parse_date(filename: str) -> tuple[str, datetime.date]:
+    """Parse filename to see if it already contains a date.
+
+    Returns the filename without the date prefix, and the date.
+
+    Handles YYYY-MM-DD and DDMM.
+    """
+    # YYYY-MM-DD
+    if re.match(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}", filename):
+        y = int(filename[:4])
+        m = int(filename[5:7])
+        d = int(filename[8:10])
+        date = datetime.date(y, m, d)
+        filename_without_date = filename[10:]
+
+    # DDMM
+    elif re.match(r"^[0-9]{4}[^[0-9]", filename):
+        y = datetime.date.today().year
+        m = int(filename[2:4])
+        d = int(filename[:2])
+        date = datetime.date(y, m, d)
+        filename_without_date = filename[4:]
+    else:
+        filename_without_date = filename
+        date = datetime.date.today()
+
+    return filename_without_date, date
+
+
+for filename in sys.argv[1:]:
+    filename_without_date, date = parse_date(filename)
+    new_filename = f"{date.isoformat()} {filename_without_date.strip()}"
+    try:
+        os.rename(filename, new_filename)
+    except OSError:
+        print(f"Cannot rename {filename}")
