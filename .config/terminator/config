@@ -15,6 +15,7 @@
 [plugins]
 [profiles]
   [[default]]
+    bold_is_bright = True
     background_color = "#1d1d1d"
     background_darkness = 0.7
     cursor_color = "#C4E90C"
