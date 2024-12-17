@@ -99,7 +99,9 @@ def main():
                 if args.recursive:
                     for dirpath, _, files in path.walk():
                         for file in files:
-                            futures.append(compress_if_image(file.absolute()))
+                            futures.append(
+                                compress_if_image(dirpath.joinpath(file).absolute())
+                            )
                 else:
                     for file in path.iterdir():
                         if file.is_file():
