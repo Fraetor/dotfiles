@@ -2,7 +2,6 @@
 
 import argparse
 import concurrent.futures
-import os
 from pathlib import Path
 import subprocess
 import sys
@@ -25,13 +24,13 @@ def compress_file(file_path: Path, args) -> None:
                 f"--distance={args.distance:.2f}",
                 "--",
                 f"{file_path.resolve()}",
-                f"{file_path.with_suffix('.jxl').resolve()}",
+                f"{file_path.with_suffix('.jxl').absolute()}",
             ],
             capture_output=True,
             text=True,
         )
         process.check_returncode()
-    except subprocess.CalledProcessError as err:
+    except subprocess.CalledProcessError:
         if not args.quiet:
             print(
                 f"Conversion of {file_path} failed:\n{process.stderr}", file=sys.stderr
@@ -45,11 +44,10 @@ def compress_file(file_path: Path, args) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Bulk convert images to JPEG XL.")
     parser.add_argument(
-        "target_directory",
-        nargs="?",
-        default=Path(os.getcwd()),
+        "target",
+        nargs="+",
         type=Path,
-        help="Directory to convert. If omitted, defaults to the current directory.",
+        help="Files or directories to convert.",
     )
     parser.add_argument(
         "-d",
@@ -68,7 +66,7 @@ def main():
         "--threads",
         action="store",
         type=int,
-        default=os.cpu_count(),
+        default=None,
         help="Maximum number of parallel encodes. Default to number of CPUs.",
     )
     verbosity_options = parser.add_mutually_exclusive_group()
@@ -88,27 +86,29 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.threads) as executor:
 
-        def compress_if_image(file_path: Path) -> concurrent.futures.Future or None:
-            # Make sure file_path is a Path object.
-            file_path = Path(file_path)
+        def compress_if_image(file_path: Path) -> concurrent.futures.Future | None:
             supported_extensions = frozenset({".jpg", ".jpeg", ".png", ".ppm", ".gif"})
             if file_path.suffix.lower() in supported_extensions:
                 return executor.submit(compress_file, file_path, args)
 
         futures = []
-        if args.recursive:
-            for dirpath, _, files in os.walk(args.target_directory):
-                for file in files:
-                    future = compress_if_image(os.path.join(dirpath, file))
-                    if future is not None:
-                        futures.append(future)
-        else:
-            with os.scandir(args.target_directory) as directory:
-                for file in directory:
-                    if file.is_file():
-                        future = compress_if_image(file.path)
-                        if future is not None:
-                            futures.append(future)
+        for path in args.target:
+            if path.is_file():
+                futures.append(compress_if_image(path.absolute()))
+            elif path.is_dir():
+                if args.recursive:
+                    for dirpath, _, files in path.walk():
+                        for file in files:
+                            futures.append(compress_if_image(file.absolute()))
+                else:
+                    for file in path.iterdir():
+                        if file.is_file():
+                            futures.append(compress_if_image(file.absolute()))
+            else:
+                print(f"Path not found: {path}", file=sys.stderr)
+
+        # Remove Nones from non-image files.
+        futures = list(filter(lambda f: f is not None, futures))
 
         jobs = 0
         total_jobs = len(futures)
