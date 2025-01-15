@@ -18,5 +18,5 @@ fi
 # Update flatpaks if we have it installed.
 if command -v flatpak > /dev/null
 then
-    flatpak update
+    flatpak update -y
 fi
