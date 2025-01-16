@@ -187,9 +187,6 @@ fi
 # Only needed until Cylc 8 is the default.
 export CYLC_VERSION=8-next
 
-# As much as I love it, I mistype too much.
-alias sl=false
-
 # Fix GPG pinentry when not running a GUI session.
 export GPG_TTY=$(tty)
 
