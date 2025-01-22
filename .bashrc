@@ -208,23 +208,6 @@ if command -v flatpak > /dev/null; then
   fi
 fi
 
-
-# Activates a python venv with a short command.
-venv() {
-  if [ -f venv/bin/activate ]; then
-    . venv/bin/activate
-  elif [ -f .venv/bin/activate ]; then
-    . .venv/bin/activate
-  elif [ -f env/bin/activate ]; then
-    . env/bin/activate
-  else
-    echo "venv not found, creating one..."
-    python3 -m venv .venv
-    . .venv/bin/activate
-    python3 -m pip install --upgrade pip --quiet
-  fi
-}
-
 # Dotfile manipulation command
 alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
