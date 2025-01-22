@@ -192,9 +192,6 @@ export GPG_TTY=$(tty)
 
 
 # === ALIASES ===
-# Running on local temp space really speeds up tox.
-alias tox="tox --workdir /tmp/persistent/tox"
-
 # Flatpak aliases
 if command -v flatpak > /dev/null; then
   if ! command -v inkscape > /dev/null; then
