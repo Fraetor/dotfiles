@@ -210,3 +210,8 @@ alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Open all the things.
 alias open=xdg-open
+
+# Use bat over cat if installed.
+if command -v bat > /dev/null; then
+  alias cat='bat -p'
+fi
