@@ -190,6 +190,8 @@ export CYLC_VERSION=8-next
 # Fix GPG pinentry when not running a GUI session.
 export GPG_TTY=$(tty)
 
+# Show useful SLURM job information.
+export SACCT_FORMAT="user,jobname%40,jobid%12,elapsed,totalcpu,reqcpus%4,ncpus%4,reqmem,maxrss, state, nodelist"
 
 # === ALIASES ===
 # Flatpak aliases
