@@ -8,13 +8,17 @@
 	guitool = meld
 	colorMoved = zebra
 	algorithm = histogram
+	renames = true
+	mnemonicPrefix = true
 [difftool]
 	prompt = false
 	guiDefault = auto
 [commit]
 	gpgSign = true
+	verbose = true
 [tag]
 	gpgSign = true
+	sort = version:refname
 [init]
 	defaultBranch = trunk
 [alias]
@@ -22,15 +26,23 @@
 	st = status
 [fetch]
 	prune = true
+	pruneTags = true
+	all = true
 [pull]
 	ff = only
 [push]
 	autoSetupRemote = true
+	followTags = true
 [rerere]
 	enabled = true
+	autoupdate = true
 [column]
 	ui = auto
 [branch]
 	sort = -committerdate
 [rebase]
 	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[merge]
+	conflictstyle = zdiff3
