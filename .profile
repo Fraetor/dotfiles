@@ -41,4 +41,9 @@ if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
 
+# Include Haskell binaries if they exist.
+if [ -f "$HOME/.ghcup/env" ]; then
+  . "$HOME/.ghcup/env"
+fi
+
 export PATH
