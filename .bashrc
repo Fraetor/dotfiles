@@ -89,7 +89,7 @@ if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
   export GIT_PS1_SHOWDIRTYSTATE="y"
   export GIT_PS1_STATESEPARATOR=""
 else
-  # If we don't have the git promp available, use a dummy version.
+  # If we don't have the git prompt available, use a dummy version.
   __git_ps1 () {
     return
   }
