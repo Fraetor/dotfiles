@@ -182,6 +182,10 @@ if [ -f /etc/debian-version ]; then
   fi
 fi
 
+# Prevent python leaving __pycache__ files everywhere.
+PYTHONDONTWRITEBYTECODE=y
+export PYTHONDONTWRITEBYTECODE
+
 # === MET OFFICE ===
 # Needed to make VER work apparently
 # Suggested by Stephen Gallagher
