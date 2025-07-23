@@ -216,11 +216,14 @@ if command -v flatpak > /dev/null; then
   fi
 fi
 
-# Dotfile manipulation command
+# Dotfile manipulation command.
 alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Open all the things.
 alias open=xdg-open
+
+# Remove gaudy colours from run0.
+alias run0='run0 --background="" --shell-prompt-prefix=""'
 
 # Use bat over cat if installed.
 if command -v bat > /dev/null; then
