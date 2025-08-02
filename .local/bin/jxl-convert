@@ -2,6 +2,7 @@
 
 import argparse
 import concurrent.futures
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -83,6 +84,10 @@ def main():
         args.jpeg_lossless = "1"
     else:
         args.jpeg_lossless = "0"
+
+    # Reduce process priority to avoid starving interactive processes.
+    # This is inherited by the spawned convertion processes.
+    os.nice(10)
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.threads) as executor:
 
