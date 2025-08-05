@@ -130,8 +130,9 @@ if command -v ver-profile > /dev/null; then
   . ver-profile
 fi
 
-# Only needed until Cylc 8 is the default.
+# Use pre-production versions of Cylc for testing.
 export CYLC_VERSION=8-next
+export CYLC_UISERVER_VERSION=8-next
 
 # Show useful SLURM job information.
 export SACCT_FORMAT="user,jobname%40,jobid%12,elapsed,totalcpu,reqcpus%4,ncpus%4,reqmem,maxrss, state, nodelist"
