@@ -113,7 +113,7 @@ export EDITOR
 # == RANDOM FIXES ==
 # Fix for Debian not sourcing vte.sh.
 # See https://gnunn1.github.io/tilix-web/manual/vteconfig/
-if [ -f /etc/debian-version ]; then
+if [ -f /etc/debian_version ]; then
   if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
     . /etc/profile.d/vte.sh
   fi
