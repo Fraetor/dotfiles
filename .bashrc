@@ -165,6 +165,9 @@ if command -v bat > /dev/null; then
   alias cat='bat -p'
 fi
 
+# Do colour in ls.
+alias ls='ls --color=auto'
+
 # Activates or creates a python venv with a short command.
 venv() {
   activate_venv() {
