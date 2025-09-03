@@ -7,6 +7,7 @@
 [diff]
 	guitool = meld
 	colorMoved = zebra
+	colorMovedWS = allow-indentation-change
 	algorithm = histogram
 	renames = true
 	mnemonicPrefix = true
