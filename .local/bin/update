@@ -1,13 +1,15 @@
 #! /bin/bash
 set -euo pipefail
-IFS="$(printf '\n\t')"
+
+# First try pkg for termux.
+if command -v pkg > /dev/null
+then
+    pkg update && pkg upgrade
 
 # Use APT where avalible.
-if command -v apt > /dev/null
+elif command -v apt > /dev/null
 then
-    sudo apt update
-    apt list --upgradable
-    sudo apt upgrade
+    sudo apt upgrade --update
 
 # Otherwise try DNF.
 elif command -v dnf > /dev/null
