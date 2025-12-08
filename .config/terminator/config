@@ -1,14 +1,17 @@
 [global_config]
   focus = system
+  cell_height = 1.2
 [keybindings]
 [profiles]
   [[default]]
     background_color = "#1d1d1d"
     background_darkness = 0.7
     cursor_shape = ibeam
+    font = Comic Code 14
     foreground_color = "#ffffff"
     scrollbar_position = hidden
     scrollback_infinite = True
+    use_system_font = False
     bold_is_bright = True
     title_transmit_fg_color = "#1d1d1d"
     title_transmit_bg_color = "#c4e90c"
@@ -17,6 +20,7 @@
     [[[child1]]]
       parent = window0
       type = Terminal
+      profile = default
     [[[window0]]]
       parent = ""
       type = Window
