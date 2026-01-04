@@ -165,6 +165,11 @@ if command -v bat > /dev/null; then
   alias cat='bat -p'
 fi
 
+# If fzf is installed setup shell integration.
+if command -v fzf > /dev/null; then
+  eval "$(fzf --bash)"
+fi
+
 # Do colour in ls.
 alias ls='ls --color=auto'
 
