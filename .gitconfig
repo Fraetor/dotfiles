@@ -27,7 +27,6 @@
 	st = status
 [fetch]
 	prune = true
-	all = true
 [pull]
 	ff = only
 [push]
