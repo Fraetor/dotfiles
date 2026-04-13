@@ -195,3 +195,8 @@ venv() {
     python3 -m pip install --upgrade pip --quiet
   fi
 }
+
+# Source local additions.
+if [ -f ~/.bashrc_local ]; then
+  . ~/.bashrc_local
+fi
