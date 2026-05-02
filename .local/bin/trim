@@ -7,5 +7,4 @@ The string to be trimmed should be piped into stdin.
 
 import sys
 
-sys.stdout.write(sys.stdin.read().strip())
-sys.stdout.write("\n")
+sys.stdout.write(sys.stdin.read().strip() + "\n")
