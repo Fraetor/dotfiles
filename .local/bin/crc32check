@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+"""Check the CRC32 of a file against its filename.
+
+Usage: crc32check [FILE]...
+
+Exits with code 1 on a failed check, and code 2 for an unreadable file.
+"""
+
+import re
+import sys
+from os import getenv
+from zlib import crc32
+
+colour = sys.stdout.isatty() and not getenv("NO_COLOR")
+RED = "\033[91m" if colour else ""
+YELLOW = "\033[33m" if colour else ""
+GREEN = "\033[0;92m" if colour else ""
+BLUE = "\033[0;94m" if colour else ""
+RESET = "\033[0m" if colour else ""
+
+# Provide a short bit of usage information.
+if len(sys.argv) < 2 or "-h" in sys.argv or "--help" in sys.argv:
+    print("Usage: crc32check [FILE]...")
+    sys.exit(2)
+
+exit_code = 0
+for filename in sys.argv[1:]:
+
+    try:
+        with open(filename, "rb") as fp:
+            crc = f"{crc32(fp.read()):08X}"
+    except OSError:
+        print(f"{YELLOW}Error reading file: {filename}{RESET}", file=sys.stderr)
+        if exit_code < 2:
+            exit_code = 2
+        continue
+
+    # Check for a CRC like pattern in the filename.
+    crc_pattern = r"[^0-9a-fA-F][0-9a-fA-F]{8}[^0-9a-fA-F]"
+    if not re.search(crc_pattern, filename):
+        print(f"{BLUE}SKIP [{crc}]: {filename}{RESET}")
+    elif crc in filename or crc.lower() in filename:
+        print(f"{GREEN}PASS [{crc}]: {filename}{RESET}")
+    else:
+        print(f"{RED}FAIL [{crc}]: {filename}{RESET}")
+        if exit_code < 1:
+            exit_code = 1
+
+sys.exit(exit_code)
