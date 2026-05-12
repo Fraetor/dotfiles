@@ -96,7 +96,9 @@ if [ -d "$HOME/.pixi/bin" ] &&
    then
   PATH="$HOME/.pixi/bin:$PATH"
   # Also include command line completions.
-  eval "$(pixi completion --shell bash)"
+  if command -v pixi; then
+    eval "$(pixi completion --shell bash)"
+  fi
 fi
 
 export PATH
