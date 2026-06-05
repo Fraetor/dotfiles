@@ -92,7 +92,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.threads) as executor:
 
         def compress_if_image(file_path: Path) -> concurrent.futures.Future | None:
-            supported_extensions = frozenset({".jpg", ".jpeg", ".png", ".ppm", ".gif"})
+            supported_extensions = frozenset({".jpg", ".jpeg", ".png", ".ppm"})
             if file_path.suffix.lower() in supported_extensions:
                 return executor.submit(compress_file, file_path, args)
 
