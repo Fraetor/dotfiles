@@ -10,6 +10,7 @@ then
 elif command -v apt > /dev/null
 then
     sudo apt upgrade --update
+    sudo apt autoremove
 
 # Otherwise try DNF.
 elif command -v dnf > /dev/null
