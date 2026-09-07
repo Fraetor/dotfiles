@@ -161,7 +161,7 @@ set minibar
 set smarthome
 
 ## Spread overlong lines over multiple screen lines.
-set softwrap
+# set softwrap
 
 ## Use this spelling checker instead of the internal one.  This option
 ## does not have a default value.
