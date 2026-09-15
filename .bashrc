@@ -7,6 +7,12 @@
 # BASH_XTRACEFD="5"
 # set -x
 
+# Source local additions.
+# Some are needed for non-interactive session.
+if [ -f ~/.bashrc_local ]; then
+  . ~/.bashrc_local
+fi
+
 # If not running interactively, don't do anything further.
 if [[ $- != *i* ]]; then
   return
@@ -105,7 +111,6 @@ export PATH
 
 
 # === SET PREFERED EDITOR ===
-# Use local nano if it exists rather than crusty system version.
 VISUAL="$(command -v nano)"
 EDITOR="$VISUAL"
 export VISUAL
@@ -122,22 +127,8 @@ if [ -f /etc/debian_version ]; then
 fi
 
 # Prevent python leaving __pycache__ files everywhere.
-PYTHONDONTWRITEBYTECODE=y
-export PYTHONDONTWRITEBYTECODE
+export PYTHONDONTWRITEBYTECODE=y
 
-# === MET OFFICE ===
-# Needed to make VER work apparently
-# Suggested by Stephen Gallagher
-if command -v ver-profile > /dev/null; then
-  . ver-profile
-fi
-
-# Use pre-production versions of Cylc for testing.
-export CYLC_VERSION=8-next
-export CYLC_UISERVER_VERSION=8-next
-
-# Show useful SLURM job information.
-export SACCT_FORMAT="user,jobname%40,jobid%12,elapsed,totalcpu,reqcpus%4,ncpus%4,reqmem,maxrss, state, nodelist"
 
 # === ALIASES ===
 # Flatpak aliases.
@@ -197,8 +188,3 @@ venv() {
     python3 -m pip install --upgrade pip --quiet
   fi
 }
-
-# Source local additions.
-if [ -f ~/.bashrc_local ]; then
-  . ~/.bashrc_local
-fi
