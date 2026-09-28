@@ -78,6 +78,25 @@ else
 fi
 export PS1
 
+
+# === SHELL INTEGRATION ===
+# If fzf is installed setup shell integration.
+if command -v fzf > /dev/null; then
+  eval "$(fzf --bash)"
+fi
+
+# Use pixi completions if installed.
+if command -v pixi > /dev/null; then
+  eval "$(pixi completion --shell bash)"
+fi
+
+# Use cylc command-line completions. They should be put into place with:
+# $ cylc get-resources cylc-completion.bash ~/.local/share/
+if [ -f "$HOME/.local/share/cylc-completion.bash" ]; then
+  . "$HOME/.local/share/cylc-completion.bash"
+fi
+
+
 # Limit the number of directories in the prompt to stop it growing too long.
 PROMPT_DIRTRIM=3
 
@@ -98,13 +117,9 @@ fi
 
 # Include pixi global binaries if they exist.
 if [ -d "$HOME/.pixi/bin" ] &&
-   [[ ":${PATH}:" != *:"$HOME"/.pixi/bin:* ]];
-   then
+    [[ ":${PATH}:" != *:"$HOME"/.pixi/bin:* ]];
+    then
   PATH="$HOME/.pixi/bin:$PATH"
-  # Also include command line completions.
-  if command -v pixi; then
-    eval "$(pixi completion --shell bash)"
-  fi
 fi
 
 export PATH
@@ -156,11 +171,6 @@ alias run0='run0 --background="" --shell-prompt-prefix=""'
 # Use bat over cat if installed.
 if command -v bat > /dev/null; then
   alias cat='bat -p'
-fi
-
-# If fzf is installed setup shell integration.
-if command -v fzf > /dev/null; then
-  eval "$(fzf --bash)"
 fi
 
 # Do colour in ls.
