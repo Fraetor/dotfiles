@@ -32,7 +32,6 @@
 	ff = only
 [push]
 	autoSetupRemote = true
-	followTags = true
 [rerere]
 	enabled = true
 	autoupdate = true
